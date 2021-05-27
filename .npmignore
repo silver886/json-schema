@@ -1,6 +1,6 @@
 /.github
 /.vscode
-/.eslintrc.js
+/.eslint*
 /jest.config.js
 /tsconfig.json
 /src

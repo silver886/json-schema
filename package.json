@@ -10,6 +10,7 @@
     "watch-test": "npm test -- --watchAll",
     "pretest": "tsc -p ./test/tsconfig.json",
     "test": "jest --coverage",
+    "prepack": "tsc",
     "prepublishOnly": "npm test"
   },
   "repository": {
@@ -40,5 +41,8 @@
     "leasot": "^11.5.0",
     "ts-node": "^9.1.1",
     "typescript": "^4.2.2"
+  },
+  "dependencies": {
+    "ajv": "^8.3.0"
   }
 }
