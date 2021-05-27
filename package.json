@@ -6,6 +6,7 @@
   "types": "./lib/index.d.ts",
   "scripts": {
     "comments": "leasot --ignore node_modules/** .git/** --tags NOTE OPTIMIZE TODO HACK XXX FIXME BUG --filetype .ts **",
+    "lint": "eslint .",
     "watch-pretest": "npm run pretest -- --watch",
     "watch-test": "npm test -- --watchAll",
     "pretest": "tsc -p ./test/tsconfig.json",
