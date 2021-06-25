@@ -88,6 +88,7 @@ function parseConfig(data: unknown, description?: string): Config {
 
 function parseConsumer(data: unknown, description?: string): Consumer {
     if (!data) throw new Error(`${description ?? ''} has no SSO consumer.`);
+
     let consumer = data;
     if (typeof data === 'string') consumer = JSON.parse(data) as Consumer;
 
