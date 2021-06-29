@@ -106,12 +106,12 @@ export function parse(data: unknown, description?: string): Info {
     if (!AJV.validate<Data>(DATA_SCHEMA, sso)) throw new Error(`${description ?? ''} has no complete SSO info.`);
 
     return {
-        config:   parseConfig(sso.config, description),
-        id:       sso.id,
-        secret:   sso.secret,
-        consumer: sso.consumer ?
-            parseConsumer(sso.consumer, description) :
-            undefined, // eslint-disable-line no-undefined
+        config: parseConfig(sso.config, description),
+        id:     sso.id,
+        secret: sso.secret,
+        ...sso.consumer ?
+            {consumer: parseConsumer(sso.consumer, description)} :
+            {},
     };
 }
 
