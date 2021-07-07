@@ -113,9 +113,10 @@ export function parse(data: unknown, description?: string): Info {
 }
 
 export function stringify(info: Info): string {
-    return JSON.stringify({
+    const data: Data = {
         ...info,
         token:      JSON.stringify(info.token),
         credential: JSON.stringify(info.credential),
-    } as Data);
+    };
+    return JSON.stringify(data);
 }
