@@ -79,7 +79,7 @@ function parseConfig(data: unknown, description?: string): Config {
     if (!data) throw new Error(`${description ?? ''} has no SSO config.`);
 
     let config = data;
-    if (typeof data === 'string') config = JSON.parse(data) as Config;
+    if (typeof data === 'string') config = JSON.parse(data);
 
     if (!AJV.validate<Config>(CONFIG_SCHEMA, config)) throw new Error(`${description ?? ''} has no complete SSO config.`);
 
@@ -90,7 +90,7 @@ function parseConsumer(data: unknown, description?: string): Consumer {
     if (!data) throw new Error(`${description ?? ''} has no SSO consumer.`);
 
     let consumer = data;
-    if (typeof data === 'string') consumer = JSON.parse(data) as Consumer;
+    if (typeof data === 'string') consumer = JSON.parse(data);
 
     if (!AJV.validate<Consumer>(CONSUMER_SCHEMA, consumer)) throw new Error(`${description ?? ''} has no complete SSO consumer.`);
 
@@ -101,7 +101,7 @@ export function parse(data: unknown, description?: string): Info {
     if (!data) throw new Error(`${description ?? ''} has no SSO info.`);
 
     let sso = data;
-    if (typeof data === 'string') sso = JSON.parse(data) as Data;
+    if (typeof data === 'string') sso = JSON.parse(data);
 
     if (!AJV.validate<Data>(DATA_SCHEMA, sso)) throw new Error(`${description ?? ''} has no complete SSO info.`);
 

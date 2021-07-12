@@ -33,7 +33,7 @@ export function parse(data: unknown, description?: string): Data {
     if (!data) throw new Error(`${description ?? ''} has no Jenkins token.`);
 
     let token = data;
-    if (typeof data === 'string') token = JSON.parse(data) as Data;
+    if (typeof data === 'string') token = JSON.parse(data);
 
     if (!AJV.validate<Data>(SCHEMA, token)) throw new Error(`${description ?? ''} has no complete Jenkins token.`);
 

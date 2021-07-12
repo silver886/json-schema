@@ -60,7 +60,7 @@ export function parse(data: unknown, description?: string): Data {
     if (!data) throw new Error(`${description ?? ''} has no DocumentDB info.`);
 
     let database = data;
-    if (typeof data === 'string') database = JSON.parse(data) as Data;
+    if (typeof data === 'string') database = JSON.parse(data);
 
     if (!AJV.validate<Data>(SCHEMA, database)) throw new Error(`${description ?? ''} has no complete DocumentDB info.`);
 
