@@ -9,13 +9,13 @@ interface Data {
     credentials: string;
 }
 
-interface Token {
+export interface Token {
     name: string;
     uuid: string;
     value: string;
 }
 
-interface Credential {
+export interface Credential {
     folder: string;
     id: string;
 }

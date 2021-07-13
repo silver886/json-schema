@@ -8,13 +8,13 @@ interface Data {
     consumer?: string;
 }
 
-interface Config {
+export interface Config {
     userPoolId: string;
     userPoolUrl: string;
     clientName: string;
 }
 
-interface Consumer {
+export interface Consumer {
     cluster: string;
     service: string;
 }
