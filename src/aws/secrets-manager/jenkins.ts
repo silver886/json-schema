@@ -5,8 +5,7 @@ interface Data {
     base: string;
     username: string;
     token: string;
-    scope: string;
-    credentials: string;
+    credentials?: string;
 }
 
 export interface Token {
@@ -16,6 +15,7 @@ export interface Token {
 }
 
 export interface Credential {
+    scope: string;
     folder: string;
     id: string;
 }
@@ -24,8 +24,7 @@ export interface Info {
     base: string;
     username: string;
     token: Token;
-    scope: string;
-    credentials: Credential[];
+    credentials?: Record<string, Credential>;
 }
 
 const AJV = new Ajv();
@@ -36,10 +35,12 @@ const DATA_SCHEMA: JSONSchemaType<Data> = {
         base:        {type: 'string'},
         username:    {type: 'string'},
         token:       {type: 'string'},
-        scope:       {type: 'string'},
-        credentials: {type: 'string'},
+        credentials: {
+            type:     'string',
+            nullable: true,
+        },
     },
-    required: ['base', 'credentials', 'scope', 'token', 'username'],
+    required: ['base', 'token', 'username'],
 };
 
 const TOKEN_SCHEMA: JSONSchemaType<Token> = {
@@ -52,16 +53,19 @@ const TOKEN_SCHEMA: JSONSchemaType<Token> = {
     required: ['uuid', 'value'],
 };
 
-const CREDENTIALS_SCHEMA: JSONSchemaType<Credential[]> = {
-    type:  'array',
-    items: {
+const CREDENTIALS_SCHEMA: JSONSchemaType<Record<string, Credential>> = {
+    type:                 'object',
+    propertyNames:        {type: 'string'},
+    additionalProperties: {
         type:       'object',
         properties: {
+            scope:  {type: 'string'},
             folder: {type: 'string'},
             id:     {type: 'string'},
         },
-        required: ['folder', 'id'],
+        required: ['scope', 'folder', 'id'],
     },
+    required: [],
 };
 
 const INFO_SCHEMA: JSONSchemaType<Info> = {
@@ -70,10 +74,12 @@ const INFO_SCHEMA: JSONSchemaType<Info> = {
         base:        {type: 'string'},
         username:    {type: 'string'},
         token:       TOKEN_SCHEMA,
-        scope:       {type: 'string'},
-        credentials: CREDENTIALS_SCHEMA,
+        credentials: {
+            ...CREDENTIALS_SCHEMA,
+            nullable: true,
+        },
     },
-    required: ['base', 'credentials', 'scope', 'token', 'username'],
+    required: ['base', 'token', 'username'],
 };
 
 function parseToken(data: unknown, description?: string): Token {
@@ -87,13 +93,13 @@ function parseToken(data: unknown, description?: string): Token {
     return token;
 }
 
-function parseCredentials(data: unknown, description?: string): Credential[] {
+function parseCredentials(data: unknown, description?: string): Record<string, Credential> {
     if (!data) throw new Error(`${description ?? ''} has no Jenkins credentials.`);
 
     let credentials = data;
     if (typeof data === 'string') credentials = JSON.parse(data);
 
-    if (!AJV.validate<Credential[]>(CREDENTIALS_SCHEMA, credentials)) throw new Error(`${description ?? ''} has no complete Jenkins credentials.`);
+    if (!AJV.validate<Record<string, Credential>>(CREDENTIALS_SCHEMA, credentials)) throw new Error(`${description ?? ''} has no complete Jenkins credentials.`);
 
     return credentials;
 }
@@ -107,11 +113,12 @@ export function parse(data: unknown, description?: string): Info {
     if (!AJV.validate<Data>(DATA_SCHEMA, jenkins)) throw new Error(`${description ?? ''} has no complete Jenkins info.`);
 
     return {
-        base:        jenkins.base,
-        username:    jenkins.username,
-        token:       parseToken(jenkins.token, description),
-        scope:       jenkins.scope,
-        credentials: parseCredentials(jenkins.credentials, description),
+        base:     jenkins.base,
+        username: jenkins.username,
+        token:    parseToken(jenkins.token, description),
+        ...jenkins.credentials ?
+            {credentials: parseCredentials(jenkins.credentials, description)} :
+            {},
     };
 }
 
