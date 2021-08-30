@@ -6,6 +6,7 @@ export interface Data {
     dbClusterIdentifier?: string;
     dbname?: string;
     localDbName?: string;
+    localDbRole?: string;
     host: string;
     port?: number;
     ssl?: boolean;
@@ -29,6 +30,10 @@ const SCHEMA: JSONSchemaType<Data> = {
             nullable: true,
         },
         localDbName: {
+            type:     'string',
+            nullable: true,
+        },
+        localDbRole: {
             type:     'string',
             nullable: true,
         },
