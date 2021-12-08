@@ -9,8 +9,7 @@
     "lint": "eslint .",
     "watch-pretest": "npm run pretest -- --watch",
     "watch-test": "npm test -- --watchAll",
-    "pretest": "tsc -p ./test/tsconfig.json",
-    "test": "jest --coverage",
+    "test": "tsc -p ./test/tsconfig.json && jest --coverage",
     "prepack": "tsc",
     "prepublishOnly": "npm test"
   },

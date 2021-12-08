@@ -1,10 +1,6 @@
 {
-    "files.exclude": {
-        "**/node_modules/": true
-    },
-    "cSpell.words": [
-        "leasot",
-        "rabbitmq",
-        "stringifying"
-    ]
+  "files.exclude": {
+    "**/node_modules/": true
+  },
+  "cSpell.words": ["leasot", "pnpm", "rabbitmq", "stringifying"]
 }
