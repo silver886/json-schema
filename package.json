@@ -1,6 +1,6 @@
 {
   "name": "@silver886/json-schema",
-  "version": "5.2.0",
+  "version": "5.2.1",
   "description": "JSON schema",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
