@@ -2,5 +2,12 @@
   "files.exclude": {
     "**/node_modules/": true
   },
-  "cSpell.words": ["leasot", "pnpm", "rabbitmq", "stringifying"]
+  "cSpell.words": [
+    "dbname",
+    "leasot",
+    "masterarn",
+    "pnpm",
+    "rabbitmq",
+    "stringifying"
+  ]
 }
