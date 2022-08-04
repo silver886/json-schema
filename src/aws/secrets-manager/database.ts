@@ -4,6 +4,7 @@ import type {JSONSchemaType} from 'ajv';
 export interface Data {
     engine: string;
     dbClusterIdentifier?: string;
+    dbInstanceIdentifier?: string;
     dbname?: string;
     localDbName?: string;
     localDbRole?: string;
@@ -22,6 +23,10 @@ const SCHEMA: JSONSchemaType<Data> = {
     properties: {
         engine:              {type: 'string'},
         dbClusterIdentifier: {
+            type:     'string',
+            nullable: true,
+        },
+        dbInstanceIdentifier: {
             type:     'string',
             nullable: true,
         },
